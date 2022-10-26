@@ -22,22 +22,24 @@
                 
                 <div class="bill-box">
                     <img src="./images/icon-dollar.svg" alt="icon-dollar">
-                    <input type="number" name="" id="bill" value="0" required>
+                    <input type="number" name="" id="bill" value="" placeholder="0" step=".01" required>
                 </div>
-                
-                <label for="">Select Tip %</label>
+                <div class="labels">
+                    <label for="">Select Tip %</label>
+                    <label for="" class="hide-label-custom">Can’t be zero</label>
+                </div>  
                 <div class="tip-box">
                     <button>5%</button>
                     <button>10%</button>
                     <button>15%</button>
                     <button>20%</button>
                     <button>25%</button>
-                    <input type="number" placeholder="Custom" id="custom">
+                    <input type="number" placeholder="Custom" id="custom" step=".01">
                 </div>
                 <label for="">Number of People</label>
                 <div class="people-box">
                     <img src="./images/icon-person.svg" alt="icon-person">
-                    <input type="number" name="" id="people" value="0">
+                    <input type="number" name="" id="people" value="" placeholder="0">
                 </div>
             </div>
             <div class="result-info">
