@@ -8,11 +8,13 @@ let totalTip;
 let tipPerPerson;
 let totalBill;
 let totalPerPerson;
+let billBox = document.querySelector(".bill-box");
+let hideLabel = document.querySelector(".hide-label");
 //აქ bill-ზე როცა დაეკლილება , მნიშვნელობა გახდება სიცარიელე
 billAmount.addEventListener("focus", function(){
     billAmount.value = "";
     resetButton.style.backgroundColor = "#26C2AE"
-
+    hideLabel.style.display = "block"
 })
 numberOfPeople.addEventListener("focus", function(){
     numberOfPeople.value = ""
@@ -34,10 +36,16 @@ for(let i = 0; i < buttons.length; i++){
 }
 //აქ bill-ზე როცა მოხდება კლიკი მაგ დროს bill-ის input-ი იღებს ჩაწერილი რიცხვის მნიშვნელობას
 billAmount.addEventListener("input", function(e){
-    billAmount.value = e.target.value;
-    
+    e.preventDefault()
+    billAmount.value = e.target.value; 
     if(billAmount.value ==! 0){
-    billAmount.style.color = "#00474B"
+       billAmount.style.color = "#00474B"
+       billBox.style.border = "2px solid #26C2AE;"
+       hideLabel.style.display = "none"
+    }else if(billAmount.value == 0){
+        billAmount.value = "";
+        // billBox.style.border = "2px solid #E17052";
+        hideLabel.style.display = "block"
     }
 
     
@@ -49,7 +57,7 @@ numberOfPeople.addEventListener("input", function(e){
     }
     
 })
-
+//ამ ფუნქციით reset-ღილაკზე კლიკის დროს ვანულებთ ყველაფრის მნიშვნელობას
 resetButton.addEventListener("click", function(){
     billAmount.value = 0;
     numberOfPeople.value = 0;

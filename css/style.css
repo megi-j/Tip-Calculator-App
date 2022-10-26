@@ -53,9 +53,17 @@ input[type=number]::-webkit-outer-spin-button {
   appearance: none; 
  
 }
-/* #bill:focus {
-    color: rgba(0,71,75);
-} */
+.hide-label {
+    color:#E17457;
+    font-size: 16px;
+    display: none;
+}
+.labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
 .bill-box, .people-box {
     width: 100%;
     height: 48px;
