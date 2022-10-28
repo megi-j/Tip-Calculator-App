@@ -53,7 +53,7 @@ input[type=number]::-webkit-outer-spin-button {
   appearance: none; 
  
 }
-.hide-label, .hide-label-custom {
+.hide-label, .hide-label-custom, .hide-label-people {
     color:#E17457;
     font-size: 16px;
     display: none;

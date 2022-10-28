@@ -36,10 +36,13 @@
                     <button>25%</button>
                     <input type="number" placeholder="Custom" id="custom" step=".01">
                 </div>
-                <label for="">Number of People</label>
+                <div class="labels">
+                    <label for="">Number of People</label>
+                    <label for="" class="hide-label-people">Can’t be zero</label>
+                </div>
                 <div class="people-box">
                     <img src="./images/icon-person.svg" alt="icon-person">
-                    <input type="number" name="" id="people" value="" placeholder="0">
+                    <input type="number" name="" id="people" value="" placeholder="0" required>
                 </div>
             </div>
             <div class="result-info">
@@ -49,7 +52,7 @@
                         <p>/ person</p>
                     </div>
                     <div>
-                        <h2>0.00</h2>
+                        <h2>$0.00</h2>
                     </div>
                     
                 </div>
@@ -59,7 +62,7 @@
                         <p>/ person</p>
                     </div>
                     <div>
-                        <h2>0.00</h2>
+                        <h2>$0.00</h2>
                     </div>
                 </div>
                 <button>RESET</button>
