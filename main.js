@@ -20,7 +20,8 @@ let billBox = document.querySelector(".bill-box");
 let hideLabel = document.querySelector(".hide-label");
 let hideLabelCustom = document.querySelector(".hide-label-custom");
 let hideLabelPeople = document.querySelector(".hide-label-people")
-
+let buttonClicked = false;
+let clickedButton;
 //აქ bill-ზე როცა დაეკლილება , მნიშვნელობა გახდება სიცარიელე
 billAmount.addEventListener("focus", function(){
     billAmount.value = "";
@@ -32,7 +33,7 @@ billAmount.addEventListener("focus", function(){
     }else{
         hideLabelPeople.style.display = "block"
     }
-    if(customInput.value > 0){
+    if(customInput.value > 0 || buttonClicked){
         hideLabelCustom.style.display = "none"
     }else{
         hideLabelCustom.style.display = "block"
@@ -49,7 +50,7 @@ numberOfPeople.addEventListener("focus", function(){
     }else{
         hideLabel.style.display = "block"
     }
-    if(customInput.value > 0){
+    if(customInput.value > 0 || buttonClicked){
         hideLabelCustom.style.display = "none"
     }else{
         hideLabelCustom.style.display = "block"
@@ -74,8 +75,10 @@ customInput.addEventListener("focus", function(){
 for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function(){
 //აქ ვამოწმებ ღილაკებზე კლიკის დროს თუ სხვა ინფუთებში ჩაწერილია რაიმე რიცხვი მაშინ წითელი წარწერა გააქროს და აღარ ამოაგდოს
+        buttonClicked = true;
         customInput.value = "";
         hideLabelCustom.style.display = "none"
+        clickedButton = buttons[i]
         if(billAmount.value > 0){
             hideLabel.style.display = "none"
         }else{
@@ -89,40 +92,15 @@ for(let i = 0; i < buttons.length; i++){
 //აქ ვამოწმებ, ღილაკებზე კლიკის დროს. თუ bill-ის და people-ს გრაფა 0 ზე მეტია ანუ ჩაწერილია რაიმე რიცხვი მაგ შემთხვევაში დაიანგარიშოს და გამოიტანოს შედეგის მხარეს, თუ არადა ისევ 0-ები დატოვოს
         if(billAmount.value > 0 && numberOfPeople.value > 0){
             if(buttons[i].innerHTML === "5%"){
-                totalTip = (billAmount.value * 5) / 100
-                tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-                totalBill = parseInt(billAmount.value) + totalTip;
-                totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-                tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-                totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;    
+                countResult(5)    
             }else if(buttons[i].innerHTML == "10%"){
-                totalTip = (billAmount.value * 10) / 100
-                tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-                totalBill = parseInt(billAmount.value) + totalTip;
-                totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-                tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-                totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
+                countResult(10)
             }else if(buttons[i].innerHTML == "15%"){
-                totalTip = (billAmount.value * 15) / 100
-                tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-                totalBill = parseInt(billAmount.value) + totalTip;
-                totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-                tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-                totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
+                countResult(15)
             }else if(buttons[i].innerHTML == "20%"){
-                totalTip = (billAmount.value * 20) / 100
-                tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-                totalBill = parseInt(billAmount.value) + totalTip;
-                totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-                tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-                totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
+                countResult(20)
             }else if(buttons[i].innerHTML == "25%"){
-                totalTip = (billAmount.value * 25) / 100
-                tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-                totalBill = parseInt(billAmount.value) + totalTip;
-                totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-                tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-                totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
+                countResult(25)
             }
         }else{
             tipAmountPerPerson.innerHTML = "$0.00"
@@ -141,6 +119,15 @@ billAmount.addEventListener("input", function(e){
        billAmount.style.color = "#00474B"
        billBox.style.border = "2px solid #26C2AE;"
        hideLabel.style.display = "none"
+       if(customInput.value > 0 && numberOfPeople.value > 0){
+        countResult(customInputValue)
+       }else if(buttonClicked && numberOfPeople.value > 0){
+          let cutOnlyNumber = clickedButton.innerHTML.substring(0,clickedButton.innerHTML.length-1)
+          countResult(cutOnlyNumber)
+       }else{
+            tipAmountPerPerson.innerHTML = "$0.00"
+            totalAmountPerPerson.innerHTML = "$0.00"
+       }
     }else if(billAmount.value === 0){
         billAmount.value = "";
         // billBox.style.border = "2px solid #E17052";
@@ -150,26 +137,22 @@ billAmount.addEventListener("input", function(e){
 customInput.addEventListener("input", function(e){
     e.preventDefault();
     customInputValue = parseInt(e.target.value);
-    if(billAmount.value > 0 && numberOfPeople.value > 0){
-        if(customInput.value > 0){
-            customInput.style.color = "#00474B";
-            billBox.style.border = "2px solid #26C2AE;"
-            hideLabelCustom.style.display = "none"
     
-            totalTip = (billAmount.value * customInputValue) / 100
-            tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
-            totalBill = parseInt(billAmount.value) + totalTip;
-            totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
-            tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
-            totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
-        }else if(customInput.value == 0){
-            customInput.value = "";
-            hideLabelCustom.style.display = "block"
-        }
-    }else{
-        tipAmountPerPerson.innerHTML = "$0.00"
-        totalAmountPerPerson.innerHTML = "$0.00"
-    }   
+    if(customInput.value > 0){
+        customInput.style.color = "#00474B";
+        billBox.style.border = "2px solid #26C2AE;"
+        hideLabelCustom.style.display = "none"
+        if(billAmount.value > 0 && numberOfPeople.value > 0){
+            countResult(customInputValue)
+        }else{
+            tipAmountPerPerson.innerHTML = "$0.00"
+            totalAmountPerPerson.innerHTML = "$0.00"
+        }   
+    }else if(customInput.value == 0){
+        customInput.value = "";
+        hideLabelCustom.style.display = "block"
+    }
+    
 })
 numberOfPeople.addEventListener("input", function(e){
     numberOfPeopleValue = parseInt(e.target.value);
@@ -177,7 +160,15 @@ numberOfPeople.addEventListener("input", function(e){
     if(numberOfPeople.value > 0){
         numberOfPeople.style.color = "#00474B"
         hideLabelPeople.style.display = "none"
-       
+        if(billAmount.value > 0 && customInput.value > 0){
+            countResult(customInputValue)
+        }else if(buttonClicked && billAmount.value > 0){
+            let cutOnlyNumber = clickedButton.innerHTML.substring(0,clickedButton.innerHTML.length-1)
+            countResult(cutOnlyNumber)
+        }else{
+            tipAmountPerPerson.innerHTML = "$0.00"
+            totalAmountPerPerson.innerHTML = "$0.00"
+        }    
     }else if(numberOfPeople.value == 0){
         numberOfPeople.value = "";
         hideLabelPeople.style.display = "block"
@@ -195,4 +186,12 @@ resetButton.addEventListener("click", function(){
     hideLabelPeople.style.display = "block"
     hideLabelCustom.style.display = "block"
 })
-
+//ეს ფუნქცია პარამეტრად იღებს პროცენტს და ანგარიშობს ყველაფერს რაც შედეგშია გამოტანილი
+function countResult(persent){
+    totalTip = (billAmount.value * persent) / 100
+    tipPerPerson = (totalTip / numberOfPeopleValue).toFixed(2);
+    totalBill = parseInt(billAmount.value) + totalTip;
+    totalPerPerson = (totalBill / numberOfPeopleValue).toFixed(2);
+    tipAmountPerPerson.innerHTML = `$${tipPerPerson}`;
+    totalAmountPerPerson.innerHTML = `$${totalPerPerson}`;
+}
