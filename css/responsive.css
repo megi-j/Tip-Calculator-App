@@ -1,0 +1,35 @@
+@media(max-width: 600px){
+    .calculator {
+        flex-direction: column;
+        /* height: fit-content; */
+        min-height: 100vh;
+        /* justify-content: center; */
+    }
+    .receive-info, .result-info {
+        width: 100%;
+    }
+    .result-info {
+       padding: 24px;
+    }
+    .logo{
+        margin-top: 50px;
+    }
+}
+@media (max-width: 450px){
+    .tip-amount h2, .total h2{
+        font-size: 32px;
+    }
+    .calculator {
+        padding: 32px;
+    }
+    .receive-info {
+        margin-bottom: 32px;
+    }
+    .result-info button{
+        width: 100%;
+    }
+    .tip-amount, .total{
+        width: 100%;
+    }
+    
+}

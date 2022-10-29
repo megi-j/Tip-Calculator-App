@@ -8,7 +8,7 @@ let numberOfPeopleValue = parseInt(numberOfPeople.value)
 
 let customInput = document.querySelector("#custom")
 let customInputValue = parseInt(customInput.value)
-
+let peopleBox = document.querySelector(".people-box")
 let tipAmountPerPerson = document.querySelector(".tip-amount h2")
 let totalAmountPerPerson = document.querySelector(".total h2")
 let resetButton = document.querySelector(".result-info button")
@@ -22,7 +22,7 @@ let hideLabelCustom = document.querySelector(".hide-label-custom");
 let hideLabelPeople = document.querySelector(".hide-label-people")
 let buttonClicked = false;
 let clickedButton;
-//აქ bill-ზე როცა დაეკლილება , მნიშვნელობა გახდება სიცარიელე
+//აქ ინფუთებზე როცა დაეკლილება , მნიშვნელობა გახდება სიცარიელე და მოწმდება სხვა ინფუთების მნიშვნელობები თუ 0-ზე მეტია მაშინ წითელი ვალიდაციის წარწერები ქრება, თუ არადა ჩნდება
 billAmount.addEventListener("focus", function(){
     billAmount.value = "";
     resetButton.style.backgroundColor = "#26C2AE"
@@ -71,14 +71,13 @@ customInput.addEventListener("focus", function(){
     }
 })
 
-//აქ tip-ების ღილაკებზე ჩამოვივლი და ვნახულობ რომელზე მოხდა დაკლიკება და მაგის მიხედვით ვითვლი მთლიან trip-ს ,თთოეულ ადამიანზე რამდენი მოუწია trip და ასევე მთლიან გადასახადს და თითოეულს რამდენი მოუწია გადასახადი
+//აქ ღილაკებზე კლიკის დროს ვამოწმებ თუ ინფუთების value არის 0-ზე მეტი მაშინ ვალიდაციის წარწერები გაქრეს შესაბამისად 
 for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener("click", function(){
-//აქ ვამოწმებ ღილაკებზე კლიკის დროს თუ სხვა ინფუთებში ჩაწერილია რაიმე რიცხვი მაშინ წითელი წარწერა გააქროს და აღარ ამოაგდოს
         buttonClicked = true;
         customInput.value = "";
-        hideLabelCustom.style.display = "none"
-        clickedButton = buttons[i]
+        hideLabelCustom.style.display = "none";
+        clickedButton = buttons[i];
         if(billAmount.value > 0){
             hideLabel.style.display = "none"
         }else{
@@ -98,23 +97,20 @@ for(let i = 0; i < buttons.length; i++){
             }else if(buttons[i].innerHTML == "15%"){
                 countResult(15)
             }else if(buttons[i].innerHTML == "20%"){
-                countResult(20)
-            }else if(buttons[i].innerHTML == "25%"){
                 countResult(25)
+            }else if(buttons[i].innerHTML == "25%"){
+                countResult(50)
             }
         }else{
             tipAmountPerPerson.innerHTML = "$0.00"
             totalAmountPerPerson.innerHTML = "$0.00"
-        }
-        
-               
-    })
+        }            
+    }) 
 }
-//აქ bill-ზე როცა მოხდება კლიკი მაგ დროს bill-ის input-ი იღებს ჩაწერილი რიცხვის მნიშვნელობას
+//აქ bill-ზე როცა მოხდება კლიკი თუ 0-ზე მაღალი რიცხვი ჩაიწერა ამოწმებს სხვა ველებში თუ არის ჩაწერილი და მაგის მიხედვით ითვლის შედეგებს, თუ რომელიმე არ არის ჩაწერილი მაშინ 00 ებს ტოვებს 
 billAmount.addEventListener("input", function(e){
     e.preventDefault()
     billAmount.value = parseInt(e.target.value); 
-
     if(billAmount.value > 0){
        billAmount.style.color = "#00474B"
        billBox.style.border = "2px solid #26C2AE;"
@@ -128,10 +124,10 @@ billAmount.addEventListener("input", function(e){
             tipAmountPerPerson.innerHTML = "$0.00"
             totalAmountPerPerson.innerHTML = "$0.00"
        }
-    }else if(billAmount.value === 0){
+    }else if(billAmount.value == 0){
         billAmount.value = "";
+        hideLabel.style.display = "block";
         // billBox.style.border = "2px solid #E17052";
-        hideLabel.style.display = "block"
     }  
 })
 customInput.addEventListener("input", function(e){
@@ -150,7 +146,9 @@ customInput.addEventListener("input", function(e){
         }   
     }else if(customInput.value == 0){
         customInput.value = "";
-        hideLabelCustom.style.display = "block"
+        hideLabelCustom.style.display = "block";
+        // customInput.style.border = "2px solid #E17052";
+
     }
     
 })
@@ -171,7 +169,8 @@ numberOfPeople.addEventListener("input", function(e){
         }    
     }else if(numberOfPeople.value == 0){
         numberOfPeople.value = "";
-        hideLabelPeople.style.display = "block"
+        hideLabelPeople.style.display = "block";
+        // peopleBox.style.border = "2px solid #E17052";
     }
     
 })
