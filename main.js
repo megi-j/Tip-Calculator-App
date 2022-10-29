@@ -127,7 +127,6 @@ billAmount.addEventListener("input", function(e){
     }else if(billAmount.value == 0){
         billAmount.value = "";
         hideLabel.style.display = "block";
-        // billBox.style.border = "2px solid #E17052";
     }  
 })
 customInput.addEventListener("input", function(e){
@@ -147,8 +146,6 @@ customInput.addEventListener("input", function(e){
     }else if(customInput.value == 0){
         customInput.value = "";
         hideLabelCustom.style.display = "block";
-        // customInput.style.border = "2px solid #E17052";
-
     }
     
 })
@@ -170,7 +167,6 @@ numberOfPeople.addEventListener("input", function(e){
     }else if(numberOfPeople.value == 0){
         numberOfPeople.value = "";
         hideLabelPeople.style.display = "block";
-        // peopleBox.style.border = "2px solid #E17052";
     }
     
 })
